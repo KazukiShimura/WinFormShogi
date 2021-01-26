@@ -10,7 +10,8 @@ namespace WinFormShogi
 
         public string PicAdress { get; set; }
         public int Onclick { get; set; } = 0;
-        public int[,] dirs = new int[3, 3];
+        public Fugou Fugou { get; set; }
+
         private Form1 form1;
 
         public Piece(Form1 form1)
@@ -28,10 +29,11 @@ namespace WinFormShogi
             this.Click -= new EventHandler(doClickEvent);
         }
 
+        //駒クリックイベント
         //１度クリックされたら色変更、再度クリックで元に戻す
         public void doClickEvent(object sender, EventArgs e)
         {
-            if (Onclick == 0)
+            if (this.Onclick == 0)
             {
                 form1.pieces.ForEach(x =>
                 {
@@ -43,7 +45,7 @@ namespace WinFormShogi
                 this.BorderStyle = BorderStyle.FixedSingle;
             }
 
-            else if (Onclick == 1)
+            else if (this.Onclick == 1)
             {
                 Onclick = 0;
                 this.BackColor = Color.Transparent;
@@ -52,16 +54,3 @@ namespace WinFormShogi
         }
     }
 }
-
-//if (name == "歩")
-//{
-//    this.dirs[0, 0] = 0;
-//    this.dirs[0, 1] = 1;
-//    this.dirs[0, 2] = 0;
-//    this.dirs[1, 0] = 0;
-//    this.dirs[1, 1] = 0;
-//    this.dirs[1, 2] = 0;
-//    this.dirs[2, 0] = 0;
-//    this.dirs[2, 1] = 0;
-//    this.dirs[2, 2] = 0;
-//}
