@@ -30,7 +30,7 @@
         {
             this.turnLabel = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.countLabel = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -55,14 +55,14 @@
             this.startButton.UseVisualStyleBackColor = true;
             this.startButton.Click += new System.EventHandler(this.startButton_Click);
             // 
-            // label2
+            // countLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(404, 146);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "手数：";
+            this.countLabel.AutoSize = true;
+            this.countLabel.Location = new System.Drawing.Point(404, 146);
+            this.countLabel.Name = "countLabel";
+            this.countLabel.Size = new System.Drawing.Size(35, 12);
+            this.countLabel.TabIndex = 2;
+            this.countLabel.Text = "手数：";
             // 
             // radioButton1
             // 
@@ -91,7 +91,7 @@
             this.ClientSize = new System.Drawing.Size(549, 411);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.countLabel);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.turnLabel);
             this.DoubleBuffered = true;
@@ -107,7 +107,7 @@
 
         private System.Windows.Forms.Label turnLabel;
         private System.Windows.Forms.Button startButton;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label countLabel;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.PictureBox pictureBox1;
     }

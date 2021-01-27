@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinFormShogi
 {
-    public struct Fugou
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public Fugou(int x, int y)
-        {
-            this.X = x;
-            this.Y = y;
-        }
-    }
 
     public partial class Form1 : Form
     {
         public List<Piece> pieces = new List<Piece>();
+        public List<Piece> emptyPieces = new List<Piece>();
         public List<Piece> playerPieces = new List<Piece>();
         public List<Piece> comPieces = new List<Piece>();
+        public List<Piece> playerSubPieces = new List<Piece>();
+        public List<Piece> comSubPieces = new List<Piece>();
+
 
         public Form1()
         {
@@ -72,6 +66,7 @@ namespace WinFormShogi
                 {
                     Piece piece = new Piece(this);
                     this.pieces.Add(piece);
+                    piece.Owner = WinFormShogi.Owner.EMPTY;
                     piece.Size = new Size(35, 40);
                     piece.SizeMode = PictureBoxSizeMode.Zoom;
                     piece.BackColor = Color.Transparent;
@@ -85,10 +80,9 @@ namespace WinFormShogi
         }
 
         //スタートボタンで初期配置
-        private void startButton_Click(object sender, EventArgs e)
+        private async void startButton_Click(object sender, EventArgs e)
         {
             startButton.Enabled = false;
-
 
             foreach (var piece in pieces)
             {
@@ -199,17 +193,27 @@ namespace WinFormShogi
                     piece.Name = "飛車";
                     piece.Image = Image.FromFile(@"Pieces\hisya.png");
                 }
+                else
+                {
+                    emptyPieces.Add(piece);
+                    piece.Owner = WinFormShogi.Owner.EMPTY;
+                }
+            }
+
+            foreach (var piece in playerPieces)
+            {
+                piece.Owner = WinFormShogi.Owner.PLAYER;
             }
 
             foreach (var piece in comPieces)
             {
                 piece.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
                 piece.Refresh();
+                piece.Owner = WinFormShogi.Owner.COMPUTER;
             }
 
-            TurnManager.Sengo(turnLabel);
-            TurnManager.TurnStart(playerPieces, comPieces);
-
+            TurnManager.TurnShuffle(turnLabel);
+            await Task.Run(() => TurnManager.RoundTurn(playerPieces, comPieces, emptyPieces));
         }
     }
 }

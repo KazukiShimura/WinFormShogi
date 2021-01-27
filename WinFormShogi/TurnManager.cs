@@ -6,20 +6,23 @@ namespace WinFormShogi
 {
     public static class TurnManager
     {
-        static int turn = 0;
+        public static Turn turn = Turn.PLAYERTURN;
+        public static int handlingCount = 0;
+        public static int preCount = 0;
         static Random random = new Random();
 
+
         //先後決定
-        public static void Sengo(Control control)
+        public static void TurnShuffle(Control control)
         {
             //turn = random.Next(2);  現状は先手番開始で固定
 
-            if (turn == 0)
+            if (turn == Turn.PLAYERTURN)
             {
                 control.Text = "手番：あなた";
                 MessageBox.Show("あなたが先手です");
             }
-            else if (turn == 1)
+            else if (turn == Turn.COMTURN)
             {
                 control.Text = "手番：コンピュータ";
                 MessageBox.Show("あなたは後手です");
@@ -27,56 +30,68 @@ namespace WinFormShogi
         }
 
         //待機（考慮中）時
-        public static void TurnStart(List<Piece> playerPieces, List<Piece> comPieces)
+        public static void RoundTurn(List<Piece> playerPieces, List<Piece> comPieces, List<Piece> emptyPieces)
         {
-            bool move = false;
+            TurnStart(playerPieces, comPieces, emptyPieces);
+            Console.WriteLine(turn);
 
             while (true)
             {
-                if (move)
+                //if (詰みならば)
+                //{
+                //    break;
+                //}
+                //手番カウントが進めば手番変更処理
+                if (handlingCount > preCount)
                 {
-                    break;
+                    TurnStart(playerPieces, comPieces, emptyPieces);
+                    preCount = handlingCount;
+                    Console.WriteLine(turn);
                 }
-
-                //プレイヤー手番の時
-                if (turn == 0)
-                {
-                    foreach (var playerPiece in playerPieces)
-                    {
-                        playerPiece.eventMaking();
-                    }
-                    foreach (var comPiece in comPieces)
-                    {
-                        comPiece.eventSuspend();
-                    }
-                    Console.WriteLine("プレイヤ・まだ");
-                }
-                else if (turn == 1)//COM手番の時
-                {
-                    foreach (var playerPiece in playerPieces)
-                    {
-                        playerPiece.eventSuspend();
-                    }
-                    foreach (var comPiece in comPieces)
-                    {
-                        comPiece.eventMaking();
-                    }
-                }
-
-                move = true;
-                //move = TurnManager.Move();
             }
+        }
 
+
+        //手番変更処理
+        public static void TurnStart(List<Piece> playerPieces, List<Piece> comPieces, List<Piece> emptyPieces)
+        {
+            //プレイヤー手番の時
+            if (turn == Turn.PLAYERTURN)
+            {
+                foreach (var playerPiece in playerPieces)
+                {
+                    playerPiece.eventMaking();
+                }
+                foreach (var comPiece in comPieces)
+                {
+                    comPiece.eventSuspend();
+                }
+                foreach (var emptyPiece in emptyPieces)
+                {
+                    emptyPiece.eventSuspend();
+                }
+            }
+            else if (turn == Turn.COMTURN)//COM手番の時
+            {
+                foreach (var playerPiece in playerPieces)
+                {
+                    playerPiece.eventSuspend();
+                }
+                foreach (var comPiece in comPieces)
+                {
+                    comPiece.eventMaking();
+                }
+                foreach (var emptyPiece in emptyPieces)
+                {
+                    emptyPiece.eventSuspend();
+                }
+            }
         }
 
         //選択された駒が動いたかどうか
-        public static bool Move()
+        public static void Move()
         {
-            //if (移動可能なマスをクリックしたら)
-            //{
-            //return true;
-            //}
-            return false;
+
         }
 
         //選択された駒が動けるかどうかの判断
