@@ -32,14 +32,17 @@
             this.startButton = new System.Windows.Forms.Button();
             this.countLabel = new System.Windows.Forms.Label();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.playerList = new System.Windows.Forms.ListBox();
+            this.comList = new System.Windows.Forms.ListBox();
+            this.emptyList = new System.Windows.Forms.ListBox();
+            this.playerSubList = new System.Windows.Forms.ListBox();
+            this.comSubList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // turnLabel
             // 
             this.turnLabel.AutoSize = true;
-            this.turnLabel.Location = new System.Drawing.Point(404, 120);
+            this.turnLabel.Location = new System.Drawing.Point(416, 105);
             this.turnLabel.Name = "turnLabel";
             this.turnLabel.Size = new System.Drawing.Size(35, 12);
             this.turnLabel.TabIndex = 0;
@@ -47,7 +50,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(406, 78);
+            this.startButton.Location = new System.Drawing.Point(418, 63);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 1;
@@ -58,7 +61,7 @@
             // countLabel
             // 
             this.countLabel.AutoSize = true;
-            this.countLabel.Location = new System.Drawing.Point(404, 146);
+            this.countLabel.Location = new System.Drawing.Point(416, 131);
             this.countLabel.Name = "countLabel";
             this.countLabel.Size = new System.Drawing.Size(35, 12);
             this.countLabel.TabIndex = 2;
@@ -67,7 +70,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(406, 29);
+            this.radioButton1.Location = new System.Drawing.Point(446, 27);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(47, 16);
             this.radioButton1.TabIndex = 3;
@@ -75,21 +78,61 @@
             this.radioButton1.Text = "10分";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // playerList
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(406, 245);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.playerList.FormattingEnabled = true;
+            this.playerList.ItemHeight = 12;
+            this.playerList.Location = new System.Drawing.Point(519, 27);
+            this.playerList.Name = "playerList";
+            this.playerList.Size = new System.Drawing.Size(70, 280);
+            this.playerList.TabIndex = 5;
+            // 
+            // comList
+            // 
+            this.comList.FormattingEnabled = true;
+            this.comList.ItemHeight = 12;
+            this.comList.Location = new System.Drawing.Point(595, 27);
+            this.comList.Name = "comList";
+            this.comList.Size = new System.Drawing.Size(70, 280);
+            this.comList.TabIndex = 6;
+            // 
+            // emptyList
+            // 
+            this.emptyList.FormattingEnabled = true;
+            this.emptyList.ItemHeight = 12;
+            this.emptyList.Location = new System.Drawing.Point(671, 27);
+            this.emptyList.Name = "emptyList";
+            this.emptyList.Size = new System.Drawing.Size(70, 280);
+            this.emptyList.TabIndex = 6;
+            // 
+            // playerSubList
+            // 
+            this.playerSubList.FormattingEnabled = true;
+            this.playerSubList.ItemHeight = 12;
+            this.playerSubList.Location = new System.Drawing.Point(747, 27);
+            this.playerSubList.Name = "playerSubList";
+            this.playerSubList.Size = new System.Drawing.Size(70, 112);
+            this.playerSubList.TabIndex = 5;
+            // 
+            // comSubList
+            // 
+            this.comSubList.FormattingEnabled = true;
+            this.comSubList.ItemHeight = 12;
+            this.comSubList.Location = new System.Drawing.Point(747, 145);
+            this.comSubList.Name = "comSubList";
+            this.comSubList.Size = new System.Drawing.Size(70, 112);
+            this.comSubList.TabIndex = 7;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(549, 411);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(827, 411);
+            this.Controls.Add(this.comSubList);
+            this.Controls.Add(this.emptyList);
+            this.Controls.Add(this.comList);
+            this.Controls.Add(this.playerSubList);
+            this.Controls.Add(this.playerList);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.countLabel);
             this.Controls.Add(this.startButton);
@@ -97,7 +140,6 @@
             this.DoubleBuffered = true;
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,6 +151,10 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Label countLabel;
         private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ListBox playerList;
+        private System.Windows.Forms.ListBox comList;
+        private System.Windows.Forms.ListBox emptyList;
+        private System.Windows.Forms.ListBox playerSubList;
+        private System.Windows.Forms.ListBox comSubList;
     }
 }
