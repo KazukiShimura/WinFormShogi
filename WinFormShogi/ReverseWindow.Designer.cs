@@ -1,6 +1,6 @@
 ﻿namespace WinFormShogi
 {
-    partial class ReveaseWindow
+    partial class ReverseWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -50,6 +50,7 @@
             this.yesButton.TabIndex = 1;
             this.yesButton.Text = "はい";
             this.yesButton.UseVisualStyleBackColor = true;
+            this.yesButton.Click += new System.EventHandler(this.yesButton_Click);
             // 
             // noButton
             // 
@@ -59,6 +60,7 @@
             this.noButton.TabIndex = 1;
             this.noButton.Text = "いいえ";
             this.noButton.UseVisualStyleBackColor = true;
+            this.noButton.Click += new System.EventHandler(this.noButton_Click);
             // 
             // ReveaseWindow
             // 

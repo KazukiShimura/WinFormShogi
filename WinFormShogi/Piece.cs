@@ -18,6 +18,8 @@ namespace WinFormShogi
 
         Form1 form1;
 
+        ReverseWindow reverseWindow;
+
         List<Piece> judgeList = new List<Piece>();
 
         public Piece(Form1 form1)
@@ -79,7 +81,6 @@ namespace WinFormShogi
                         OnHandyBox(Turn.COMTURN);
                     }
                     ChangePiece(form1.playerPieces, form1.comPieces);
-
                     ClearBox(form1.comPieces);
                     ChangeBoxOff(this);
                     turnManager.turn = Turn.PLAYERTURN;
@@ -97,7 +98,6 @@ namespace WinFormShogi
                         OnHandyBox(Turn.PLAYERTURN);
                     }
                     ChangePiece(form1.playerPieces, form1.comPieces);
-
                     ClearBox(form1.playerPieces);
                     ChangeBoxOff(this);
                     turnManager.turn = Turn.COMTURN;
@@ -116,7 +116,6 @@ namespace WinFormShogi
                     turnManager.turn = Turn.COMTURN;
                     turnManager.handlingCount++;
                 }
-
                 else if (form1.comPieces.Any(n => n.Onclick == 1) && canmove)
                 {
                     ChangePiece(form1.playerPieces, form1.comPieces);
@@ -125,8 +124,66 @@ namespace WinFormShogi
                     turnManager.turn = Turn.PLAYERTURN;
                     turnManager.handlingCount++;
                 }
+                else if (form1.playerSubPieces.Any(n => n.Onclick == 1))
+                {
+                    DropPiece(form1.playerSubPieces);
+                    turnManager.turn = Turn.COMTURN;
+                    turnManager.handlingCount++;
+                }
+                else if (form1.comSubPieces.Any(n => n.Onclick == 1))
+                {
+                    DropPiece(form1.comSubPieces);
+                    turnManager.turn = Turn.PLAYERTURN;
+                    turnManager.handlingCount++;
+                }
             }
         }
+
+        //持ち駒が打てる場所か判断
+        public bool CanDrop()
+        {
+            if (this.Name == "歩兵")
+            {
+                return false;
+            }
+            else if (this.Name == "香車")
+            {
+                return false;
+
+            }
+            else if (this.Name == "桂馬")
+            {
+                return false;
+
+            }
+            return true;
+        }
+
+        //持ち駒を打つ
+        public void DropPiece(List<Piece> subPieces)
+        {
+            var temp = new Piece(form1);
+            temp = subPieces.FirstOrDefault(n => n.Onclick == 1);
+            this.Image = temp.Image;
+            this.Name = temp.Name;
+            this.CanMovePosList = temp.CanMovePosList;
+            this.Onclick = 0;
+            if (turnManager.turn == Turn.PLAYERTURN)
+            {
+                this.Owner = Owner.PLAYER;
+                form1.playerPieces.Add(this);
+            }
+            else if (turnManager.turn == Turn.COMTURN)
+            {
+                this.Owner = Owner.COMPUTER;
+                form1.comPieces.Add(this);
+            }
+            form1.emptyPieces.Remove(this);
+            subPieces.Remove(temp);
+            temp.Dispose();
+            DrawSubPiece(subPieces);
+        }
+
 
         //マスの色を付ける
         public void ChangeBoxOn(Piece piece)
@@ -188,37 +245,158 @@ namespace WinFormShogi
         {
             if (turn == Turn.PLAYERTURN)
             {
-                var piece = new Piece(form1);
-                piece.Image = this.Image;
-                piece.Name = this.Name;
-                piece.CanMovePosList = this.CanMovePosList;
-                piece.Owner = Owner.PLAYER;
-                piece.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                MakeSubPiece(form1.playerSubPieces);
+                DrawSubPiece(form1.playerSubPieces);
+            }
+            else if (turn == Turn.COMTURN)
+            {
+                MakeSubPiece(form1.comSubPieces);
+                DrawSubPiece(form1.comSubPieces);
+            }
+        }
+
+        //持ち駒生成
+        public void MakeSubPiece(List<Piece> subPieces)
+        {
+            var piece = new Piece(form1);
+            piece.Image = this.Image;
+            piece.Name = this.Name;
+            piece.Owner = Owner.PLAYER;
+            piece.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            if (subPieces == form1.playerSubPieces)
+            {
                 form1.pieces.Add(piece);
                 form1.playerSubPieces.Add(piece);
                 form1.comPieces.Remove(this);
                 form1.playerSubPieces.OrderBy(n => n.Name);
 
-                DrawSubPiece(form1.playerSubPieces);
+                if (piece.Name == "歩兵")
+                {
+                    piece.CanMovePosList.Add(new Fugou(0, -1));
+                }
+                else if (piece.Name == "香車")
+                {
+                    for (int i = -8; i <= -1; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(0, i));
+                    }
+                }
+                else if (piece.Name == "桂馬")
+                {
+                    piece.CanMovePosList.Add(new Fugou(1, -2));
+                    piece.CanMovePosList.Add(new Fugou(-1, -2));
+                }
+                else if (piece.Name == "銀将")
+                {
+                    piece.CanMovePosList.Add(new Fugou(-1, -1));
+                    piece.CanMovePosList.Add(new Fugou(0, -1));
+                    piece.CanMovePosList.Add(new Fugou(1, -1));
+                    piece.CanMovePosList.Add(new Fugou(1, 1));
+                    piece.CanMovePosList.Add(new Fugou(-1, 1));
+                }
+                else if (piece.Name == "金将")
+                {
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, -1));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                    piece.CanMovePosList.Add(new Fugou(0, 1));
+                }
+                else if (piece.Name == "金将")
+                {
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, -1));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                    piece.CanMovePosList.Add(new Fugou(0, 1));
+                }
+                else if (piece.Name == "飛車")
+                {
+                    for (int i = -8; i <= 8; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(0, i));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                }
+                else if (piece.Name == "角行")
+                {
+                    for (int i = -8; i <= 8; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, i));
+                        piece.CanMovePosList.Add(new Fugou(i, -i));
+                    }
+                }
             }
-            else if (turn == Turn.COMTURN)
+            else if (subPieces == form1.comSubPieces)
             {
-                var piece = new Piece(form1);
-                piece.Image = this.Image;
-                piece.Name = this.Name;
-                piece.CanMovePosList = this.CanMovePosList;
-                piece.Owner = Owner.COMPUTER;
-                piece.Image.RotateFlip(RotateFlipType.Rotate180FlipNone);
                 form1.pieces.Add(piece);
                 form1.comSubPieces.Add(piece);
                 form1.playerPieces.Remove(this);
                 form1.comSubPieces.OrderBy(n => n.Name);
 
-                DrawSubPiece(form1.comSubPieces);
+                if (piece.Name == "歩兵")
+                {
+                    piece.CanMovePosList.Add(new Fugou(0, 1));
+                }
+                else if (piece.Name == "香車")
+                {
+                    for (int i = 1; i <= 8; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(0, i));
+                    }
+                }
+                else if (piece.Name == "桂馬")
+                {
+                    piece.CanMovePosList.Add(new Fugou(1, 2));
+                    piece.CanMovePosList.Add(new Fugou(-1, 2));
+                }
+                else if (piece.Name == "銀将")
+                {
+                    piece.CanMovePosList.Add(new Fugou(-1, 1));
+                    piece.CanMovePosList.Add(new Fugou(0, 1));
+                    piece.CanMovePosList.Add(new Fugou(1, 1));
+                    piece.CanMovePosList.Add(new Fugou(1, -1));
+                    piece.CanMovePosList.Add(new Fugou(-1, -1));
+                }
+                else if (piece.Name == "金将")
+                {
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, 1));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                    piece.CanMovePosList.Add(new Fugou(0, -1));
+                }
+                else if (piece.Name == "金将")
+                {
+                    for (int i = -1; i <= 1; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, -1));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                    piece.CanMovePosList.Add(new Fugou(0, 1));
+                }
+                else if (piece.Name == "飛車")
+                {
+                    for (int i = -8; i <= 8; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(0, i));
+                        piece.CanMovePosList.Add(new Fugou(i, 0));
+                    }
+                }
+                else if (piece.Name == "角行")
+                {
+                    for (int i = -8; i <= 8; i++)
+                    {
+                        piece.CanMovePosList.Add(new Fugou(i, i));
+                        piece.CanMovePosList.Add(new Fugou(i, -i));
+                    }
+                }
             }
         }
-
-        //持ち駒描画
+        //持ち駒生成・描画
         public void DrawSubPiece(List<Piece> subPieces)
         {
             for (int i = 0; i < subPieces.Count; i++)
@@ -551,12 +729,27 @@ namespace WinFormShogi
             }
         }
 
+        //成り選択・動作
+        public void SelectReverse()
+        {
+
+            if (reverseWindow.NoButtonClick)
+            {
+                return;
+            }
+            else if (reverseWindow.YesButtonClick)
+            {
+
+            }
+        }
+
+
         //成るか確認フォーム表示
         public void ShowReveaseWindow()
         {
             if (CanReverse(form1.playerPieces, form1.comPieces))
             {
-                ReveaseWindow reveaseWindow = new ReveaseWindow();
+                ReverseWindow reveaseWindow = new ReverseWindow();
                 reveaseWindow.Show();
             }
         }
