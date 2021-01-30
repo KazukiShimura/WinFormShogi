@@ -128,38 +128,46 @@ namespace WinFormShogi
             {
                 foreach (var playerPiece in playerPieces)
                 {
-                    playerPiece.eventMaking();
+                    playerPiece.AttackPieceEvent();
                 }
                 foreach (var comPiece in comPieces)
                 {
-                    comPiece.eventSuspend();
+                    comPiece.DifenseOnBoardEvent();
                 }
                 foreach (var emptyPiece in emptyPieces)
                 {
-                    emptyPiece.eventSuspend();
+                    emptyPiece.DifenseOnBoardEvent();
                 }
                 foreach (var playerSubPiece in playerSubPieces)
                 {
-                    playerSubPiece.eventMaking();
+                    playerSubPiece.AttackPieceEvent();
+                }
+                foreach (var comSubPiece in comSubPieces)
+                {
+                    comSubPiece.DifenseOutBoardEvent();
                 }
             }
             else if (turn == Turn.COMTURN)//COM手番の時
             {
                 foreach (var playerPiece in playerPieces)
                 {
-                    playerPiece.eventSuspend();
+                    playerPiece.DifenseOnBoardEvent();
                 }
                 foreach (var comPiece in comPieces)
                 {
-                    comPiece.eventMaking();
+                    comPiece.AttackPieceEvent();
                 }
                 foreach (var emptyPiece in emptyPieces)
                 {
-                    emptyPiece.eventSuspend();
+                    emptyPiece.DifenseOnBoardEvent();
+                }
+                foreach (var playerSubPiece in playerSubPieces)
+                {
+                    playerSubPiece.DifenseOutBoardEvent();
                 }
                 foreach (var comSubPiece in comSubPieces)
                 {
-                    comSubPiece.eventMaking();
+                    comSubPiece.AttackPieceEvent();
                 }
             }
         }

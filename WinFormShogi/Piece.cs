@@ -25,16 +25,22 @@ namespace WinFormShogi
             this.form1 = form1;
         }
 
-        public void eventMaking()
+        public void AttackPieceEvent()
         {
             this.Click += new EventHandler(ClickEvent);
-            this.Click -= new EventHandler(moveEvent);
+            this.Click -= new EventHandler(MoveEvent);
         }
 
-        public void eventSuspend()
+        public void DifenseOnBoardEvent()
         {
             this.Click -= new EventHandler(ClickEvent);
-            this.Click += new EventHandler(moveEvent);
+            this.Click += new EventHandler(MoveEvent);
+        }
+
+        public void DifenseOutBoardEvent()
+        {
+            this.Click -= new EventHandler(ClickEvent);
+            this.Click -= new EventHandler(MoveEvent);
         }
 
         //駒クリックイベント
@@ -61,7 +67,7 @@ namespace WinFormShogi
         }
 
         //どれか駒がクリックされている状態で、他のマスをクリックしたときの処理
-        public void moveEvent(object sender, EventArgs e)
+        public void MoveEvent(object sender, EventArgs e)
         {
             if (this.Owner == Owner.PLAYER)
             {
@@ -542,6 +548,16 @@ namespace WinFormShogi
             else
             {
                 return false;
+            }
+        }
+
+        //成るか確認フォーム表示
+        public void ShowReveaseWindow()
+        {
+            if (CanReverse(form1.playerPieces, form1.comPieces))
+            {
+                ReveaseWindow reveaseWindow = new ReveaseWindow();
+                reveaseWindow.Show();
             }
         }
 
