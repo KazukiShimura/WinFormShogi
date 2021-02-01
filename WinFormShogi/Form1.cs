@@ -16,7 +16,6 @@ namespace WinFormShogi
         public List<Piece> playerSubPieces = new List<Piece>();
         public List<Piece> comSubPieces = new List<Piece>();
 
-
         public Form1()
         {
             InitializeComponent();
@@ -39,7 +38,6 @@ namespace WinFormShogi
             }
             pen1.Dispose();
         }
-
         private void InitEmptySet()
         {
             int i = 0;
@@ -266,12 +264,8 @@ namespace WinFormShogi
             }
 
             turnManager turnManager = new turnManager(this);
-
             turnManager.TurnShuffle(turnLabel);
-
             await Task.Run(() => turnManager.RoundTurn(playerPieces, comPieces, emptyPieces, turnLabel, countLabel, playerList, comList, emptyList, playerSubList, comSubList, playerSubPieces, comSubPieces));
-
-
         }
     }
 }

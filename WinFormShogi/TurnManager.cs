@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,7 +23,6 @@ namespace WinFormShogi
         //先後決定
         public static void TurnShuffle(Control turnText)
         {
-
             turn = (Turn)random.Next(2);
 
             if (turn == Turn.PLAYERTURN)
@@ -47,15 +47,22 @@ namespace WinFormShogi
 
             while (true)
             {
-                //if (詰みならば)
-                //{
-                //    break;
-                //}
+                await Task.Delay(1 * 100);
+
+                if (form1.playerSubPieces.Any(n => n.Name == "王将"))
+                {
+                    MessageBox.Show("あなたの勝ちです");
+                    break;
+                }
+                else if (form1.comSubPieces.Any(n => n.Name == "王将"))
+                {
+                    MessageBox.Show("あなたの負けです");
+                    break;
+                }
 
                 //手番カウントが進めば手番変更処理
                 if (handlingCount > preCount)
                 {
-                    await Task.Delay(1 * 100);
                     TurnStart(playerPieces, comPieces, emptyPieces, playerSubPieces, comSubPieces);
                     preCount = handlingCount;
 
@@ -91,7 +98,6 @@ namespace WinFormShogi
                         {
                             comSubList.Items.Clear();
                         }
-
 
                         foreach (var item in playerPieces)
                         {

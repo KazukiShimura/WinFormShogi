@@ -37,12 +37,13 @@
             this.emptyList = new System.Windows.Forms.ListBox();
             this.playerSubList = new System.Windows.Forms.ListBox();
             this.comSubList = new System.Windows.Forms.ListBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // turnLabel
             // 
             this.turnLabel.AutoSize = true;
-            this.turnLabel.Location = new System.Drawing.Point(416, 105);
+            this.turnLabel.Location = new System.Drawing.Point(425, 127);
             this.turnLabel.Name = "turnLabel";
             this.turnLabel.Size = new System.Drawing.Size(35, 12);
             this.turnLabel.TabIndex = 0;
@@ -50,7 +51,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(418, 63);
+            this.startButton.Location = new System.Drawing.Point(427, 85);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 1;
@@ -61,7 +62,7 @@
             // countLabel
             // 
             this.countLabel.AutoSize = true;
-            this.countLabel.Location = new System.Drawing.Point(416, 131);
+            this.countLabel.Location = new System.Drawing.Point(425, 153);
             this.countLabel.Name = "countLabel";
             this.countLabel.Size = new System.Drawing.Size(35, 12);
             this.countLabel.TabIndex = 2;
@@ -70,12 +71,12 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(446, 27);
+            this.radioButton1.Location = new System.Drawing.Point(427, 30);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 16);
+            this.radioButton1.Size = new System.Drawing.Size(41, 16);
             this.radioButton1.TabIndex = 3;
             this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "10分";
+            this.radioButton1.Text = "3分";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // playerList
@@ -123,6 +124,17 @@
             this.comSubList.Size = new System.Drawing.Size(70, 112);
             this.comSubList.TabIndex = 7;
             // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(427, 52);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(47, 16);
+            this.radioButton2.TabIndex = 3;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "10分";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -133,6 +145,7 @@
             this.Controls.Add(this.comList);
             this.Controls.Add(this.playerSubList);
             this.Controls.Add(this.playerList);
+            this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.countLabel);
             this.Controls.Add(this.startButton);
@@ -156,5 +169,6 @@
         private System.Windows.Forms.ListBox emptyList;
         private System.Windows.Forms.ListBox playerSubList;
         private System.Windows.Forms.ListBox comSubList;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
