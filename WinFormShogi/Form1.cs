@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +16,10 @@ namespace WinFormShogi
         public List<Piece> comPieces = new List<Piece>();
         public List<Piece> playerSubPieces = new List<Piece>();
         public List<Piece> comSubPieces = new List<Piece>();
+        public int p_time_sec = 0;
+        public int p_time_min = 0;
+        public int c_time_sec = 0;
+        public int c_time_min = 0;
 
         public Form1()
         {
@@ -33,7 +38,7 @@ namespace WinFormShogi
             {
                 for (int j = 0; j < grid; j++)
                 {
-                    e.Graphics.DrawRectangle(pen1, 50 + (i * 35), 20 + (j * 40), 35, 40); // 長方形
+                    e.Graphics.DrawRectangle(pen1, 50 + (i * 40), 20 + (j * 45), 40, 45); // 長方形
                 }
             }
             pen1.Dispose();
@@ -48,12 +53,12 @@ namespace WinFormShogi
                     Piece piece = new Piece(this);
                     this.pieces.Add(piece);
                     piece.Owner = WinFormShogi.Owner.EMPTY;
-                    piece.Size = new Size(35, 40);
+                    piece.Size = new Size(40, 45);
                     piece.SizeMode = PictureBoxSizeMode.Zoom;
                     piece.BackColor = Color.Transparent;
                     Controls.Add(this.pieces[i]);
                     piece.Fugou = new Fugou(9 - x, y + 1);
-                    this.pieces[i].Location = new Point(50 + x * 35, 20 + y * 40);
+                    this.pieces[i].Location = new Point(50 + x * 40, 20 + y * 45);
                     i++;
                 }
             }
@@ -264,8 +269,68 @@ namespace WinFormShogi
             }
 
             turnManager turnManager = new turnManager(this);
+
+            timer1.Enabled = true;
+
+            if (radioButton3.Checked)
+            {
+                p_time_min = 3;
+                c_time_min = 3;
+            }
+            if (radioButton10.Checked)
+            {
+                p_time_min = 10;
+                c_time_min = 10;
+            }
+
+            radioButton3.Enabled = false;
+            radioButton10.Enabled = false;
+
+            playerTimeLabel.Text = $"{String.Format("{0:D2}", p_time_min)}:{String.Format("{0:D2}", p_time_sec)}";
+            comTimeLabel.Text = $"{String.Format("{0:D2}", c_time_min)}:{String.Format("{0:D2}", c_time_sec)}";
+
             turnManager.TurnShuffle(turnLabel);
             await Task.Run(() => turnManager.RoundTurn(playerPieces, comPieces, emptyPieces, turnLabel, countLabel, playerList, comList, emptyList, playerSubList, comSubList, playerSubPieces, comSubPieces));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            if (turnManager.handlingCount >= 1)
+            {
+                timer1.Start();
+            }
+
+            if (turnManager.turn == Turn.PLAYERTURN)
+            {
+                p_time_sec--;
+                if (p_time_sec == -1)
+                {
+                    p_time_sec = 599;
+                    p_time_min--;
+                }
+
+            }
+            else if (turnManager.turn == Turn.COMTURN)
+            {
+                c_time_sec--;
+                if (c_time_sec == -1)
+                {
+                    c_time_sec = 599;
+                    c_time_min--;
+                }
+            }
+
+            if (p_time_sec == 0 && p_time_min == 0 ||
+                playerSubPieces.Any(n => n.Name == "王将") ||
+                comSubPieces.Any(n => n.Name == "王将"))
+            {
+                timer1.Stop();
+            }
+
+            playerTimeLabel.Text = $"{String.Format("{0:D2}", p_time_min)}:{String.Format("{0:D2}", p_time_sec / 10)}";
+            comTimeLabel.Text = $"{String.Format("{0:D2}", c_time_min)}:{String.Format("{0:D2}", c_time_sec / 10)}";
+
         }
     }
 }

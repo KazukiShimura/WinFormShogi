@@ -12,7 +12,6 @@ namespace WinFormShogi
         public static int handlingCount = 0;
         public static int preCount = 0;
         static Random random = new Random();
-
         public Form1 form1;
 
         public turnManager(Form1 form1)
@@ -49,12 +48,12 @@ namespace WinFormShogi
             {
                 await Task.Delay(1 * 100);
 
-                if (form1.playerSubPieces.Any(n => n.Name == "王将"))
+                if (form1.playerSubPieces.Any(n => n.Name == "王将") || (form1.c_time_sec == 0 && form1.c_time_min == 0))
                 {
                     MessageBox.Show("あなたの勝ちです");
                     break;
                 }
-                else if (form1.comSubPieces.Any(n => n.Name == "王将"))
+                else if (form1.comSubPieces.Any(n => n.Name == "王将") || (form1.p_time_sec == 0 && form1.p_time_min == 0))
                 {
                     MessageBox.Show("あなたの負けです");
                     break;
@@ -119,7 +118,6 @@ namespace WinFormShogi
                         {
                             comSubList.Items.Add(item.Name);
                         }
-
                     }));
                 }
             }

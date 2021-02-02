@@ -461,7 +461,7 @@ namespace WinFormShogi
                 subPieces[i].BringToFront();
                 if (subPieces == form1.playerSubPieces)
                 {
-                    form1.playerSubPieces[i].Location = new Point(370, 100 + (i * 35));
+                    form1.playerSubPieces[i].Location = new Point(420, 100 + (i * 35));
                 }
                 else if (subPieces == form1.comSubPieces)
                 {
@@ -960,6 +960,7 @@ namespace WinFormShogi
                         }
                     }
                 }
+                reverseSelect = MessageBoxResult.No;
             }
             else if (reverseSelect == MessageBoxResult.No)
             {
