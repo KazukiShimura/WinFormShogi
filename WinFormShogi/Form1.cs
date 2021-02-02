@@ -110,7 +110,6 @@ namespace WinFormShogi
                     piece.CanMovePosList.Add(new Fugou(1, -1));
                     piece.CanMovePosList.Add(new Fugou(1, 1));
                     piece.CanMovePosList.Add(new Fugou(-1, 1));
-
                 }
                 else if (piece.Fugou.X == 4 && piece.Fugou.Y == 9 ||
                          piece.Fugou.X == 6 && piece.Fugou.Y == 9)
@@ -124,14 +123,12 @@ namespace WinFormShogi
                         piece.CanMovePosList.Add(new Fugou(i, 0));
                     }
                     piece.CanMovePosList.Add(new Fugou(0, 1));
-
                 }
                 else if (piece.Fugou.X == 2 && piece.Fugou.Y == 8)
                 {
                     playerPieces.Add(piece);
                     piece.Name = "飛車";
                     piece.Image = Image.FromFile(@"Pieces\hisya.png");
-
                     for (int i = -8; i <= 8; i++)
                     {
                         piece.CanMovePosList.Add(new Fugou(0, i));
@@ -269,7 +266,6 @@ namespace WinFormShogi
             }
 
             turnManager turnManager = new turnManager(this);
-
             timer1.Enabled = true;
 
             if (radioButton3.Checked)
@@ -285,17 +281,14 @@ namespace WinFormShogi
 
             radioButton3.Enabled = false;
             radioButton10.Enabled = false;
-
             playerTimeLabel.Text = $"{String.Format("{0:D2}", p_time_min)}:{String.Format("{0:D2}", p_time_sec)}";
             comTimeLabel.Text = $"{String.Format("{0:D2}", c_time_min)}:{String.Format("{0:D2}", c_time_sec)}";
-
             turnManager.TurnShuffle(turnLabel);
             await Task.Run(() => turnManager.RoundTurn(playerPieces, comPieces, emptyPieces, turnLabel, countLabel, playerList, comList, emptyList, playerSubList, comSubList, playerSubPieces, comSubPieces));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
             if (turnManager.handlingCount >= 1)
             {
                 timer1.Start();
@@ -330,7 +323,6 @@ namespace WinFormShogi
 
             playerTimeLabel.Text = $"{String.Format("{0:D2}", p_time_min)}:{String.Format("{0:D2}", p_time_sec / 10)}";
             comTimeLabel.Text = $"{String.Format("{0:D2}", c_time_min)}:{String.Format("{0:D2}", c_time_sec / 10)}";
-
         }
     }
 }

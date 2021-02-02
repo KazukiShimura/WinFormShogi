@@ -9,20 +9,14 @@ namespace WinFormShogi
 {
     public class Piece : PictureBox
     {
-        //public string Name { get; set; }  PictureBoxに存在するので削除
-
         public string PicAdress { get; set; }
         public int Onclick { get; set; } = 0;
         public Fugou Fugou { get; set; }
         public Owner Owner { get; set; }
         public List<Fugou> CanMovePosList { get; set; } = new List<Fugou>();
-
         Form1 form1;
-
         List<Piece> judgeList = new List<Piece>();
-
         MessageBoxResult reverseSelect = new MessageBoxResult();
-
 
         public Piece(Form1 form1)
         {
@@ -131,7 +125,6 @@ namespace WinFormShogi
                 {
                     ShowReveaseWindow();
                     SelectReverse();
-
                     ChangePiece(form1.playerPieces, form1.comPieces);
                     ClearBox(form1.comPieces);
                     ChangeBoxOff(this);
@@ -219,7 +212,6 @@ namespace WinFormShogi
             temp.Dispose();
             DrawSubPiece(subPieces);
         }
-
 
         //マスの色を付ける
         public void ChangeBoxOn(Piece piece)
@@ -469,7 +461,6 @@ namespace WinFormShogi
                 }
             }
         }
-
 
         //移動前のマスをEMPTY化
         public void ClearBox(List<Piece> pieces)
