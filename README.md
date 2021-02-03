@@ -1,0 +1,2 @@
+# WinFormShogi
+# aaaaaa
