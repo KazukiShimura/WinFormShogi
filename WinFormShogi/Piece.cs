@@ -9,6 +9,8 @@ namespace WinFormShogi
 {
     public class Piece : PictureBox
     {
+
+
         public string PicAdress { get; set; }
         public int Onclick { get; set; } = 0;
         public Fugou Fugou { get; set; }
