@@ -1,6 +1,15 @@
 # 将棋（Winフォームアプリ）
 ## 更新履歴
 - 2021/02/03(初回)
+## 使い方
+- ZIPダウンロード
+- WinFormShogi.sinファイルをVisualStudioで起動
+- デバッグ無しで開始
+- 一度エラーが出ますが、一旦終了
+- VIsualStudioも終了
+- フォルダ「Pieces」を、WinFormShogi → bin → Debugフォルダ内に移動
+- DebugフォルダのWinFormShogiアプリケーションを起動してスタート
+
 ## 概要
 C#を学習して初めて製作したアプリです
 - 将棋ゲームアプリ
