@@ -2,7 +2,7 @@
 ## 更新履歴
 - 2021/02/03(初回)
 ## 使い方
-- ZIPダウンロード
+- ZIPダウンロード(画面上部の緑色Codeボタン→Download ZIP)
 - WinFormShogi.sinファイルをVisualStudioで起動
 - デバッグ無しで開始
 - 一度エラーが出ますが、一旦終了
